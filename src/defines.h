@@ -1,4 +1,4 @@
-/** @file
+/** @file defines.h
  * @brief This file defines the pin mappings and critical definitions
  *
  * @author  Rocky Gray Jr.
@@ -9,6 +9,12 @@
 #define DEFINES_H 1
 
 #include <avr/io.h>
+
+//#define F_CPU 16000000L
+///Uncomment #DEBUG to print out system information.
+//#define DEBUG 1
+///Uncomment #SIMULATE in order to use the rpm regulator simulation
+//#define SIMULATE 1
 
 /** @name User Input Defines */
 //@{
@@ -48,7 +54,7 @@
 #define IGNITION_DLY    10      ///<Ignition kill duration
 #define PULSE_ROT       2       ///<Number of pulses per rotation
 #define RPM_HIST_LEN    10      ///<Length of RPM history
-#define RPM_MAX         7000    ///<Maximum rpm for down shifting
+#define RPM_MAX         5200    ///<Maximum rpm for down shifting
 //@}
 
 /** @name Timer Defines */

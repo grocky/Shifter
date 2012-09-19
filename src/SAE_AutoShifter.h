@@ -1,12 +1,15 @@
 /**
- *  @file
+ *  @file SAE_AutoShifter.h
  *  @brief This header file contains constant definitions and function 
  *  prototypes.
  *
- *  This project uses the Arduino Uno board. It uses the ATMEGA 328P 
+ *  This project uses the Arduino Duemilanove board which uses the ATMEGA 328P 
  *  microcontroller with a 16MHz crystal oscillator. Pin mappings described
  *  below should only be used for this board or ones with the same pin 
- *  mappings
+ *  mappings. You can change the Port and Pin definitions in the 
+ *  @c defines.c file.
+ *
+ *  @see defines.c
  *
  *  @author  Rocky Gray Jr.
  *
@@ -20,253 +23,58 @@
 #include <avr/interrupt.h>
 #include "defines.h"
 #include "delay_rg.h"
+#include "usr_button.h"
+#include "tachometer.h"
+#include "gear.h"
 
-uint8_t cur_adc;
+#ifdef DEBUG
 uint8_t canPrint = 0;   ///<DEBUG variable - print flag
-///Mode of the system
-enum Mode {manual, semi_man, automated}mode;///< Mode switch
+#endif
 
-/** @defgroup tacho Tachometer
- *  Holds the tach pulses and rpm conversion.
- *  @c rpms update at #TIMER1_FREQ
+typedef struct shifter Shifter;
+
+Shifter *shifter_singleton();
+
+void shifter_init(Shifter *shifter, Gear *g);
+
+/** @defgroup simu Simulator
+ *  Variables needed for the simulator
  *  @{
  */
-typedef struct
-{
-    uint16_t pulse;
-    uint16_t rpms;
-    uint8_t  index;
-    uint16_t rpms_hist[RPM_HIST_LEN];
-    uint16_t ave;
-} Tach;
-
-Tach tach;  ///<Tachometer object
-
-/**
- * update_ave_rpms()
- * Updates the Tach rpm variable
- */
-inline void update_ave_rpms()
-{
-    uint32_t sum = 0;
-
-    for(int i = 0; i < RPM_HIST_LEN; ++i)
-        sum += tach.rpms_hist[i];
-
-    tach.ave = sum/RPM_HIST_LEN;
-}
-
-/**
- * average_rpms()
- * Returns the Tach's average rpm variable
- */
-inline uint16_t average_rpms()
-{
-    return tach.ave;
-}
-inline uint16_t cur_rpms()
-{
-    return tach.rpms;
-}
-
+#ifdef SIMULATE
+uint8_t throttle_pos;      ///<Throttle position updated by ADC
+#endif
 //@}
 
-/** @defgroup usrBtns User Buttons
- *  The states of the buttons, debounce values, and related functions.
- *  @{
- */
-typedef struct
-{
-    uint8_t state;  ///< Button state. Either #PRESSED or #RELEASED
-    uint16_t count; ///< Button Press count.
-} Usr_Btns;
+void t_set_rpms(Shifter *shifter, uint16_t x);
 
-Usr_Btns up_shift,  ///< Upshift button
-         dn_shift;  ///< Downshift button
+void t_set_ave(Shifter *shifter, uint16_t x);
 
-/**
- * btn_state()
- *
- * @return the @c state of @c u_btn
- */
-inline uint8_t btn_state(Usr_Btns *u_btn)
-{
-    return u_btn->state;
-}
-/**
- * btn_cout()
- *
- * @return the press @c count of @c u_btn
- */
-inline uint16_t btn_count(Usr_Btns *u_btn)
-{
-    return u_btn->count;
-}
+uint16_t g_upper(Shifter *shifter);
 
-/**
- * onRelease()
- * The on-release handler for @c btn
- *
- * @return  False if buton is not pressed
- * @return  True when the button is pressed and released
- *
- * @var btn The button to handle
- */
-inline uint8_t onRelease(Usr_Btns *btn)
-{
-    if(btn->state == RELEASED)
-        return 0;
-    if(btn->state == PRESSED)
-        while(btn->state == PRESSED)
-            delay_us(1);
-    
-    return 1;
-}
+uint16_t g_lower(Shifter *shifter);
 
-//@}
-/** defgroup gears Gears
- *  Defines the gear structure and related functions.
- *  @{
- */
-typedef struct Gear{
-    uint8_t     g_num;     ///< Number of the Gear
-    uint16_t    lowerB;    ///< Lower bound of Gear
-    uint16_t    upperB;    ///< Upper bound of Gear
-    uint16_t    cruise;    ///< Cruise RPM level
-    struct Gear *prev;     ///< Previous gear
-    struct Gear *next;     ///< Next gear
-    uint16_t    increase[MAX_GEARS];///< rpm increase levels
-    uint16_t    decrease[MAX_GEARS];///< rpm decrease levels
-}Gear;
+Gear *g_prev(Shifter *shifter);
 
-Gear *gear_;               ///<Current gear
-uint8_t throttle_pos;
-/**
- * Gear_Const()
- * Constructor for Gear Object
- *
- * @var this    the Gear to construct
- * @var num     Gear number
- * @var lower   Lower bound for Gear
- * @var upper   Upper bound for Gear
- * @var p       Previous Gear
- * @var n       Next Gear
- */
-inline void Gear_Construct(Gear *this, uint8_t num, uint16_t lower,
-                        uint16_t upper, uint16_t cruise, Gear *p,Gear *n)
-{
-    this->g_num = num;
-    this->lowerB = lower;
-    this->upperB = upper;
-    this->cruise = cruise;
-    this->prev = p;
-    this->next = n;
-}
+Gear *g_next(Shifter *shifter);
 
-inline void Gear_IncreaseLevels(Gear *this, uint16_t levels[])
-{
-    for(int i=0; i<MAX_GEARS;++i)
-        this->increase[i] = levels[i];
-}
+Usr_Btns *down_btn(Shifter *shifter);
 
-inline void Gear_DecreaseLevels(Gear *this, uint16_t levels[])
-{
-    for(int i=1; i<MAX_GEARS;++i)
-        this->decrease[i] = levels[i];
-}
-/**
- * gear_num()
- * 
- * @return the number of the current gear
- */
-inline uint8_t gear_num()
-{
-    return gear_->g_num;
-}
-
-/**
- * gear_upper()
- *
- * @return The upper bound of the current gear
- */
-inline uint16_t gear_upper()
-{
-    return gear_->upperB;
-}
-
-/**
- * gear_lower()
- *
- * @return The lower bound of the current gear
- */
-inline uint16_t gear_lower()
-{
-    return gear_->lowerB;
-}
-
+Usr_Btns *up_btn(Shifter *shifter);
 /**
  * shift()
  * Shift gear in the desired @c direction
  *
- * @var direction   The direction to shift
+ * This function actuates the solenoid in the desired direction while sending
+ * a signal to the ECU to retard ignition. 
+ *
+ * If #SIMULATE is defined, then the simulator will decrease and increase the
+ * rpms upon upshifting and downshifting, respectively. This emulates the 
+ * sharp change in rpms when the engine changes gears.
+ *
+ * @param direction   The direction to shift
  */
-inline void shift(uint8_t direction)
-{
-    ECU_PORT |= _BV(IGNITION_INT);
-    delay_ms(IGNITION_DLY);
-    SOLEN_OP_PORT |= _BV(direction);
-    delay_ms(SOLEN_DLY);
-    SOLEN_OP_PORT &= ~_BV(direction);
-    delay_ms(IGNITION_DLY);
-    ECU_PORT &= ~_BV(IGNITION_INT);
-
-    cli();
-//#ifdef SIMULATE
-    int next_rpms;
-    switch(direction)
-    {
-        case SOLEN_UP:
-            switch(gear_->g_num)
-            {
-                case 1:
-                    tach.rpms -= 60;
-                    break;
-                case 2:
-                    tach.rpms -= 60;
-                    break;
-                case 3:
-                    tach.rpms -= 60;
-                    break;
-                case 4:
-                    tach.rpms -= 60;
-                    break;
-                default:
-                    //Shifting up in 5th gear not allowed...
-                    break;
-            }
-        case SOLEN_DN:
-            switch(gear_->g_num)
-            {
-                case 1:
-                case 2:
-                    tach.rpms += 60;
-                    break;
-                case 3:
-                    tach.rpms += 60;
-                    break;
-                case 4:
-                    tach.rpms += 60;
-                    break;
-                case 5:
-                    tach.rpms += 60;
-                    break;
-                default:
-                    break;
-            }
-    }
-    sei();
-//#endif  /* SIMULATE */
-}
+void shift(uint8_t direction, Shifter *s);
 //@}
 
 /** 
@@ -276,33 +84,37 @@ inline void shift(uint8_t direction)
  */
 ISR(TIMER0_COMPA_vect);
 
-//#ifdef SIMULATE
-/**
- * @brief Converts position of external pedal to the change of rpms.
+/** 
+ *  @brief  Tachometer sample time. 
  *
- * This function converts the position of an external electric pedal using
- * the ADC. It uses the position of the pedal to describe the derrivative of
- * the engine's rpms over time.
+ *  Fires at #TIMER1_FREQ Hz. (1ms) 
+ *  @par Converts the number of pulses counted from the external
+ *  interrupt into a value that represents the instantaneous rpms of
+ *  the engine. It also places the current rpms into 
+ *  the history of rpms.
  */
-ISR(ADC_vect);
-//#else
+ISR(TIMER1_COMPA_vect);
+
+#ifndef SIMULATE
 /**
  *  @brief  Count pulses from the tachometer.
  *  Fires at the rising edge of signal
  *  @par Counts the pulses from the tachometer until TIMER1 fires.
  */
 ISR(INT0_vect);
-//#endif  /* SIMULATE */
-
-/** 
- *  @brief  Tachometer sample time. 
+#else
+/**
+ * @ingroup simu
+ * @brief Converts position of external pedal to the change of rpms.
  *
- *  Fires at #TIMER1_FREQ Hz. (1ms) 
- *  @par Converts the number of pulses counted
- *  from the external interrupt into a value that represents the 
- *  instantaneous rpms of the engine. It also places the current rpms into 
- *  the history of rpms.
+ * This function converts the position of an external electric pedal using
+ * the ADC. It uses the position of the pedal to describe the derivative of
+ * the engine's rpms over time.
+ *
+ * @note The 5V electric pedal we used did not output a full 5V range. So the
+ * ADC scale used in this function represents the .8V - 4.2V range provided by
+ * the pedal. 
  */
-ISR(TIMER1_COMPA_vect);
-
+ISR(ADC_vect);
+#endif  /* SIMULATE */
 #endif  /* SAE_AUTOSHIFTER_H */

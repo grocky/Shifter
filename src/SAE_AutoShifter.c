@@ -1,5 +1,5 @@
 /**
- *  @file
+ *  @file SAE_AutoShifter.c
  *  @brief This file defines the main task and ISRs
  * 
  *  @author  Rocky Gray Jr.
@@ -8,157 +8,133 @@
  */
 #include "SAE_AutoShifter.h"
 
-// Update Button States (1ms)
-ISR(TIMER0_COMPA_vect)
+struct shifter
 {
-    // Upshift button
-    if(!(BTN_IP_PIN & _BV(USHIFT_PIN)))
-    {
-        if(++up_shift.count >= DB_DELAY && up_shift.state == RELEASED)
-            up_shift.state = PRESSED;
-    }else
-    {
-        up_shift.count = 0;
-        up_shift.state = RELEASED;
-    }
-    
-    // Downshift button
-    if(!(BTN_IP_PIN & _BV(DSHIFT_PIN)))
-    {
-        if(++dn_shift.count >= DB_DELAY && dn_shift.state == RELEASED)
-            dn_shift.state = PRESSED;
-    }else
-    {
-        dn_shift.count = 0;
-        dn_shift.state = RELEASED;
-    }
+    Tach     *tach;
+    Gear     *cur_gear;
+    Usr_Btns *up_shift,  ///< Upshift button
+             *dn_shift;  ///< Downshift button
+}shiftr_singleton;
 
-    // Mode button
-    if(!(BTN_IP_PIN & _BV(SEMIAUTO_PIN)))
-        mode = semi_man;
-    else if(!(BTN_IP_PIN & _BV(AUTOMATIC_PIN)))
-        mode = automated;
-    else
-        mode = manual;
+Usr_Btns ushift, dshift;
+
+Shifter *shifter_singleton()
+{
+    return &shiftr_singleton;
 }
 
-ISR(ADC_vect)
+void shifter_init(Shifter *shifter, Gear *g)
 {
-    uint8_t adc = ADCH;
-    cur_adc = ADCH;
-    if(adc <= 50)
-        throttle_pos = 0;
-    else if(adc <= 80)
-        throttle_pos = 1;
-    else if(adc <= 114)
-        throttle_pos = 2;
-    else if(adc <= 149)
-        throttle_pos = 3;
-    else if(adc <= 184)
-        throttle_pos = 4;
-    else
-        throttle_pos = 5;
+    shifter->tach = tachometer_singleton();
+    shifter->cur_gear = g;
+    shifter->up_shift = &ushift;
+    shifter->dn_shift = &dshift;
+    btn_init(shifter->up_shift);
+    btn_init(shifter->dn_shift);
 }
 
-// Tachometer sample time (1s)
-ISR(TIMER1_COMPA_vect)
+void t_set_rpms(Shifter *shifter, uint16_t x)
 {
-//#ifdef DEBUG
-    static uint8_t tick=0;///<DEBUG variable - system tick
-    if(++tick >= 2)
-    {
-        canPrint = 1;
-        tick = 0;
-    }
-  static uint8_t prev_pos = 0;
-//#endif
-/*
-  switch(throttle_pos)
-  {
-      case 4:
-        tach.rpms += 30;
-      case 3:
-        tach.rpms += 20;
-      case 2:
-        tach.rpms += 10;
-      case 1:
-        tach.rpms += 5;
-      case 0:
-        if(tach.rpms <=30)
-            tach.rpms = 0;
-        else
-            tach.rpms -= 30;
-  }
-*/
+    shifter->tach->rpms = x;
+}
 
-    switch(throttle_pos)
+void t_set_ave(Shifter *shifter, uint16_t x)
+{
+    shifter->tach->ave = x;
+}
+
+uint16_t g_upper(Shifter *shifter)
+{
+    return gear_upper(shifter->cur_gear);
+}
+
+uint16_t g_lower(Shifter *shifter)
+{
+    return gear_lower(shifter->cur_gear);
+}
+
+Gear *g_prev(Shifter *shifter)
+{
+    return shifter->cur_gear->prev;
+}
+
+Gear *g_next(Shifter *shifter)
+{
+    return shifter->cur_gear->next;
+}
+
+Usr_Btn *down_btn(Shifter *shifter)
+{
+    return shifter->dn_shift;
+}
+
+Usr_Btn *up_btn(Shifter *shifter)
+{
+    return shifter->up_shift;
+}
+//Move gear shift in the desired direction
+void shift(uint8_t direction, Shifter *s)
+{
+    ECU_PORT |= _BV(IGNITION_INT);
+    delay_ms(IGNITION_DLY);
+    SOLEN_OP_PORT |= _BV(direction);
+    delay_ms(SOLEN_DLY);
+    SOLEN_OP_PORT &= ~_BV(direction);
+    delay_ms(IGNITION_DLY);
+    ECU_PORT &= ~_BV(IGNITION_INT);
+
+#ifdef SIMULATE
+    cli();
+    switch(direction)
     {
-        case 4:
-            if(throttle_pos < prev_pos)
-                if(tach.rpms > gear_->decrease[throttle_pos])
-                    tach.rpms -= gear_->decrease[throttle_pos];
-            else
-            //if(tach.rpms <= gear_upper())
-                    tach.rpms += gear_->increase[throttle_pos];
-            break;
-        case 3:
-            if(throttle_pos==0 || throttle_pos < prev_pos)
+        case SOLEN_UP:
+            switch(s->cur_gear->g_num)
             {
-                if(tach.rpms > gear_->decrease[throttle_pos])
-                    tach.rpms -= gear_->decrease[throttle_pos];
-            }else
-            {
-                //if(tach.rpms <= gear_upper())
-                    tach.rpms += gear_->increase[throttle_pos];
+                case 1:
+                    tach.rpms -= 500;
+                    break;
+                case 2:
+                    tach.rpms -= 400;
+                    break;
+                case 3:
+                    tach.rpms -= 300;
+                    break;
+                case 4:
+                    tach.rpms -= 200;
+                    break;
+                default:
+                    //Shifting up in 5th gear not allowed...
+                    break;
             }
-            break;
-        case 2:
-            if(throttle_pos==0 || throttle_pos < prev_pos)
+        case SOLEN_DN:
+            switch(s->cur_gear->g_num)
             {
-                if(tach.rpms > gear_->decrease[throttle_pos])
-                    tach.rpms -= gear_->decrease[throttle_pos];
-            }else
-            {
-                //if(tach.rpms <= gear_upper())
-                    tach.rpms += gear_->increase[throttle_pos];
-            }   
-            break;
-        case 1:
-            if(throttle_pos==0 || throttle_pos < prev_pos)
-            {
-                if(tach.rpms > gear_->decrease[throttle_pos])
-                    tach.rpms -= gear_->decrease[throttle_pos];
-            }else
-            {
-                //if(tach.rpms <= gear_upper())
-                    tach.rpms += gear_->increase[throttle_pos];
+                case 1:
+                case 2:
+                    tach.rpms += 400;
+                    break;
+                case 3:
+                    tach.rpms += 300;
+                    break;
+                case 4:
+                    tach.rpms += 200;
+                    break;
+                case 5:
+                    tach.rpms += 100;
+                    break;
+                default:
+                    break;
             }
-            break;
-        case 0:
-                if(tach.rpms > gear_->decrease[throttle_pos])
-                    tach.rpms -= gear_->decrease[throttle_pos];
-            break;
-        default:
-            break;
     }
-    prev_pos = throttle_pos;
-  /*
-//#endif
-    //rpms = pulses/[pulses/rotation]*[sample freq]*[60s/min]
-    tach.rpms = tach.pulse*60*TIMER1_FREQ/PULSE_ROT; //rot/min
-    tach.rpms_hist[tach.index] = tach.rpms;
+    sei();
+#endif  /* SIMULATE */
     
-    if(++tach.index == 10)
-        tach.index = 0;
-   
-    //reset pulse so we can start count over
-    tach.pulse = 0;
-    */
-}
-// Pulse counter
-ISR(INT0_vect)
-{/*
-//    BOARD_PIN |= _BV(BOARD_LIGHT);
-    ++tach.pulse;
-    */
+    Gear *temp=0;
+    if(direction == SOLEN_UP)
+        temp = g_next(s);
+    else if(direction == SOLEN_DN)
+        temp = g_prev(s);
+
+    s->cur_gear = temp;
+
 }
