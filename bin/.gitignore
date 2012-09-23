@@ -1,0 +1,28 @@
+*~
+*.swp
+bin/dep
+
+#avr-gcc
+*.eep
+*.elf
+*.hex
+*.lss
+*.map
+
+#Object files
+*.o
+
+#Libraries
+*.lib
+*.a
+
+#Shared objets
+*.dll
+*.so
+*.s0.*
+*.dylib
+
+#Executables
+*.exe
+*.out
+*.app

@@ -1,0 +1,21 @@
+*~
+*.swp
+bin/dep
+
+#Object files
+*.o
+
+#Libraries
+*.lib
+*.a
+
+#Shared objets
+*.dll
+*.so
+*.s0.*
+*.dylib
+
+#Executables
+*.exe
+*.out
+*.app
