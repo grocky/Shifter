@@ -46,28 +46,15 @@ Tach tach;  ///<Tachometer object
  * update_ave_rpms()
  * Updates the Tach rpm variable
  */
-inline void update_ave_rpms()
-{
-    uint32_t sum = 0;
-
-    for(int i = 0; i < RPM_HIST_LEN; ++i)
-        sum += tach.rpms_hist[i];
-
-    tach.ave = sum/RPM_HIST_LEN;
-}
+void update_ave_rpms();
 
 /**
  * average_rpms()
  * Returns the Tach's average rpm variable
  */
-inline uint16_t average_rpms()
-{
-    return tach.ave;
-}
-inline uint16_t cur_rpms()
-{
-    return tach.rpms;
-}
+uint16_t average_rpms();
+
+uint16_t cur_rpms();
 
 //@}
 
@@ -89,19 +76,14 @@ Usr_Btns up_shift,  ///< Upshift button
  *
  * @return the @c state of @c u_btn
  */
-inline uint8_t btn_state(Usr_Btns *u_btn)
-{
-    return u_btn->state;
-}
+uint8_t btn_state(Usr_Btns *u_btn);
+
 /**
  * btn_cout()
  *
  * @return the press @c count of @c u_btn
  */
-inline uint16_t btn_count(Usr_Btns *u_btn)
-{
-    return u_btn->count;
-}
+uint16_t btn_count(Usr_Btns *u_btn);
 
 /**
  * onRelease()
@@ -112,16 +94,7 @@ inline uint16_t btn_count(Usr_Btns *u_btn)
  *
  * @var btn The button to handle
  */
-inline uint8_t onRelease(Usr_Btns *btn)
-{
-    if(btn->state == RELEASED)
-        return 0;
-    if(btn->state == PRESSED)
-        while(btn->state == PRESSED)
-            delay_us(1);
-    
-    return 1;
-}
+uint8_t onRelease(Usr_Btns *btn);
 
 //@}
 /** defgroup gears Gears
@@ -152,57 +125,35 @@ uint8_t throttle_pos;
  * @var p       Previous Gear
  * @var n       Next Gear
  */
-inline void Gear_Construct(Gear *this, uint8_t num, uint16_t lower,
-                        uint16_t upper, uint16_t cruise, Gear *p,Gear *n)
-{
-    this->g_num = num;
-    this->lowerB = lower;
-    this->upperB = upper;
-    this->cruise = cruise;
-    this->prev = p;
-    this->next = n;
-}
+void Gear_Construct(Gear *this, uint8_t num, uint16_t lower,
+                        uint16_t upper, uint16_t cruise, Gear *p,Gear *n);
 
-inline void Gear_IncreaseLevels(Gear *this, uint16_t levels[])
-{
-    for(int i=0; i<MAX_GEARS;++i)
-        this->increase[i] = levels[i];
-}
 
-inline void Gear_DecreaseLevels(Gear *this, uint16_t levels[])
-{
-    for(int i=1; i<MAX_GEARS;++i)
-        this->decrease[i] = levels[i];
-}
+void Gear_IncreaseLevels(Gear *this, uint16_t levels[]);
+
+void Gear_DecreaseLevels(Gear *this, uint16_t levels[]);
+
 /**
  * gear_num()
  * 
  * @return the number of the current gear
  */
-inline uint8_t gear_num()
-{
-    return gear_->g_num;
-}
+uint8_t gear_num();
 
 /**
  * gear_upper()
  *
  * @return The upper bound of the current gear
  */
-inline uint16_t gear_upper()
-{
-    return gear_->upperB;
-}
+uint16_t gear_upper();
+
 
 /**
  * gear_lower()
  *
  * @return The lower bound of the current gear
  */
-inline uint16_t gear_lower()
-{
-    return gear_->lowerB;
-}
+uint16_t gear_lower();
 
 /**
  * shift()
@@ -210,99 +161,7 @@ inline uint16_t gear_lower()
  *
  * @var direction   The direction to shift
  */
-inline void shift(uint8_t direction)
-{
-    ECU_PORT |= _BV(IGNITION_INT);
-    delay_ms(IGNITION_DLY);
-    SOLEN_OP_PORT |= _BV(direction);
-    delay_ms(SOLEN_DLY);
-    SOLEN_OP_PORT &= ~_BV(direction);
-    delay_ms(IGNITION_DLY);
-    ECU_PORT &= ~_BV(IGNITION_INT);
+void shift(uint8_t direction);
 
-    cli();
-//#ifdef SIMULATE
-    int next_rpms;
-    switch(direction)
-    {
-        case SOLEN_UP:
-            switch(gear_->g_num)
-            {
-                case 1:
-                    tach.rpms -= 60;
-                    break;
-                case 2:
-                    tach.rpms -= 60;
-                    break;
-                case 3:
-                    tach.rpms -= 60;
-                    break;
-                case 4:
-                    tach.rpms -= 60;
-                    break;
-                default:
-                    //Shifting up in 5th gear not allowed...
-                    break;
-            }
-        case SOLEN_DN:
-            switch(gear_->g_num)
-            {
-                case 1:
-                case 2:
-                    tach.rpms += 60;
-                    break;
-                case 3:
-                    tach.rpms += 60;
-                    break;
-                case 4:
-                    tach.rpms += 60;
-                    break;
-                case 5:
-                    tach.rpms += 60;
-                    break;
-                default:
-                    break;
-            }
-    }
-    sei();
-//#endif  /* SIMULATE */
-}
 //@}
-
-/** 
- *  @brief  Update the button states.
- *
- *  Fires at #TIMER0_FREQ Hz.
- */
-ISR(TIMER0_COMPA_vect);
-
-//#ifdef SIMULATE
-/**
- * @brief Converts position of external pedal to the change of rpms.
- *
- * This function converts the position of an external electric pedal using
- * the ADC. It uses the position of the pedal to describe the derrivative of
- * the engine's rpms over time.
- */
-ISR(ADC_vect);
-//#else
-/**
- *  @brief  Count pulses from the tachometer.
- *  Fires at the rising edge of signal
- *  @par Counts the pulses from the tachometer until TIMER1 fires.
- */
-ISR(INT0_vect);
-//#endif  /* SIMULATE */
-
-/** 
- *  @brief  Tachometer sample time. 
- *
- *  Fires at #TIMER1_FREQ Hz. (1ms) 
- *  @par Converts the number of pulses counted
- *  from the external interrupt into a value that represents the 
- *  instantaneous rpms of the engine. It also places the current rpms into 
- *  the history of rpms.
- */
-ISR(TIMER1_COMPA_vect);
-
 #endif  /* SAE_AUTOSHIFTER_H */
