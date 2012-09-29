@@ -1,0 +1,17 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$main_8c.html#a99ccbea44caa7d91c17782c602f956ef" title="Initialize Timer 0." alt="" coords="124,5,207,32"/>
+<area shape="rect" id="node5" href="$main_8c.html#a968c314be24f7043eeff034ebf7c4a03" title="Initialize Timer 1." alt="" coords="124,56,207,83"/>
+<area shape="rect" id="node7" href="$main_8c.html#a43bba613ce0efd6af387cd04458ede8d" title="Initialize i/o ports and timer." alt="" coords="137,107,193,133"/>
+<area shape="rect" id="node11" href="$_s_a_e___auto_shifter_8h.html#abf8478276f1c8d0a00333ad9f061b2e7" title="Gear_Construct" alt="" coords="109,157,222,184"/>
+<area shape="rect" id="node13" href="$delay__rg_8c.html#aa0dce6d249d81fb85b082273270ba710" title="Delays for ms milliseconds." alt="" coords="275,233,354,260"/>
+<area shape="rect" id="node15" href="$group__usr_btns.html#ga2f0699e265a6cc26a98e3470366b5cda" title="onRelease" alt="" coords="124,309,207,336"/>
+<area shape="rect" id="node19" href="$_s_a_e___auto_shifter_8h.html#ab255f19ddfec9d8967d83c340c29de9e" title="shift" alt="" coords="142,259,189,285"/>
+<area shape="rect" id="node22" href="$_s_a_e___auto_shifter_8h.html#a3a18aa2ddacbcd7f3c5f6c48f8c813b3" title="gear_upper" alt="" coords="122,360,209,387"/>
+<area shape="rect" id="node24" href="$_s_a_e___auto_shifter_8h.html#a1805be701915c837c3a779f8679d1701" title="gear_lower" alt="" coords="123,411,207,437"/>
+<area shape="rect" id="node26" href="$group__tacho.html#ga8746e3cc762f3153c2889e07dbb6ece0" title="update_ave_rpms" alt="" coords="104,461,227,488"/>
+<area shape="rect" id="node28" href="$_s_a_e___auto_shifter_8h.html#adde353caf7da095b13aeb74c2cc31277" title="gear_num" alt="" coords="126,512,205,539"/>
+<area shape="rect" id="node30" href="$group__tacho.html#ga962c04c1da2810dd1602a83f649a454e" title="cur_rpms" alt="" coords="127,563,203,589"/>
+<area shape="rect" id="node32" href="$group__tacho.html#gaa71ed50a06812b35c553b2291460396e" title="average_rpms" alt="" coords="114,613,217,640"/>
+<area shape="rect" id="node9" href="$serial_8c.html#a8a03401d8d7139a6fefba138e1c364c6" title="init_usart" alt="" coords="277,107,352,133"/>
+<area shape="rect" id="node17" href="$delay__rg_8c.html#a58f9378c36dbb864c00f8c964c652173" title="Delays for us microseconds." alt="" coords="277,309,352,336"/>
+</map>

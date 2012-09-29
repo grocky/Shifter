@@ -1,0 +1,44 @@
+\hypertarget{group__timer_defs}{\section{Timer Definitions}
+\label{group__timer_defs}\index{Timer Definitions@{Timer Definitions}}
+}
+\subsection*{Timer Definitions}
+\label{_amgrp3ef478b156f2b0ca1fc5ec8cb719658d}%
+ Definitions to make setting up the timer easier \begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__timer_defs_ga86d7a61fd737b39e76370528c160da17}{P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q}~1000
+\begin{DoxyCompactList}\small\item\em Button pin check frequency. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__timer_defs_ga0fac869d83ac1a584d6c45cf609f5fe7}{P\-R\-E\-S\-C\-A\-L\-E\-R}~1
+\begin{DoxyCompactList}\small\item\em Prescaler needed for longer timer. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__timer_defs_gafa3acf3a16f5e22815253e1cd4f25dca}{T\-I\-M\-E\-R1\-\_\-\-C\-O\-U\-N\-T}~((F\-\_\-\-C\-P\-U/(\hyperlink{group__timer_defs_ga86d7a61fd737b39e76370528c160da17}{P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q}$\ast$\hyperlink{group__timer_defs_ga0fac869d83ac1a584d6c45cf609f5fe7}{P\-R\-E\-S\-C\-A\-L\-E\-R}))-\/1)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Definitions to make setting up the timer easier 
+
+\subsection{Define Documentation}
+\hypertarget{group__timer_defs_ga86d7a61fd737b39e76370528c160da17}{\index{Timer Definitions@{Timer Definitions}!P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q@{P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q}}
+\index{P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q@{P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q}!Timer Definitions@{Timer Definitions}}
+\subsubsection[{P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q}~1000}}\label{group__timer_defs_ga86d7a61fd737b39e76370528c160da17}
+
+
+Button pin check frequency. 
+
+In Hz \hypertarget{group__timer_defs_ga0fac869d83ac1a584d6c45cf609f5fe7}{\index{Timer Definitions@{Timer Definitions}!P\-R\-E\-S\-C\-A\-L\-E\-R@{P\-R\-E\-S\-C\-A\-L\-E\-R}}
+\index{P\-R\-E\-S\-C\-A\-L\-E\-R@{P\-R\-E\-S\-C\-A\-L\-E\-R}!Timer Definitions@{Timer Definitions}}
+\subsubsection[{P\-R\-E\-S\-C\-A\-L\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf P\-R\-E\-S\-C\-A\-L\-E\-R}~1}}\label{group__timer_defs_ga0fac869d83ac1a584d6c45cf609f5fe7}
+
+
+Prescaler needed for longer timer. 
+
+Valid values\-:
+\begin{DoxyItemize}
+\item 1 (no prescaling)
+\item 8
+\item 64
+\item 256
+\item 1024 
+\end{DoxyItemize}\hypertarget{group__timer_defs_gafa3acf3a16f5e22815253e1cd4f25dca}{\index{Timer Definitions@{Timer Definitions}!T\-I\-M\-E\-R1\-\_\-\-C\-O\-U\-N\-T@{T\-I\-M\-E\-R1\-\_\-\-C\-O\-U\-N\-T}}
+\index{T\-I\-M\-E\-R1\-\_\-\-C\-O\-U\-N\-T@{T\-I\-M\-E\-R1\-\_\-\-C\-O\-U\-N\-T}!Timer Definitions@{Timer Definitions}}
+\subsubsection[{T\-I\-M\-E\-R1\-\_\-\-C\-O\-U\-N\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf T\-I\-M\-E\-R1\-\_\-\-C\-O\-U\-N\-T}~((F\-\_\-\-C\-P\-U/({\bf P\-I\-N\-\_\-\-C\-H\-E\-C\-K\-\_\-\-F\-R\-E\-Q}$\ast${\bf P\-R\-E\-S\-C\-A\-L\-E\-R}))-\/1)}}\label{group__timer_defs_gafa3acf3a16f5e22815253e1cd4f25dca}
+Computes the value for T\-C\-N\-T 

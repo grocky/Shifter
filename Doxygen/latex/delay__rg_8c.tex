@@ -1,0 +1,77 @@
+\hypertarget{delay__rg_8c}{\section{delay\-\_\-rg.\-c File Reference}
+\label{delay__rg_8c}\index{delay\-\_\-rg.\-c@{delay\-\_\-rg.\-c}}
+}
+
+
+This file defines delay functions that extend the usefullness of the avr-\/gcc delay functions.  
+
+
+{\ttfamily \#include \char`\"{}delay\-\_\-rg.\-h\char`\"{}}\\*
+Include dependency graph for delay\-\_\-rg.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=144pt]{delay__rg_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{delay__rg_8c_aa0dce6d249d81fb85b082273270ba710}{delay\-\_\-ms} (uint16\-\_\-t ms)
+\begin{DoxyCompactList}\small\item\em Delays for {\ttfamily ms} milliseconds. \end{DoxyCompactList}\item 
+void \hyperlink{delay__rg_8c_a58f9378c36dbb864c00f8c964c652173}{delay\-\_\-us} (uint16\-\_\-t us)
+\begin{DoxyCompactList}\small\item\em Delays for {\ttfamily us} microseconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file defines delay functions that extend the usefullness of the avr-\/gcc delay functions. \begin{DoxyAuthor}{Author}
+Rocky Gray Jr.
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2/6/2012 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{delay__rg_8c_aa0dce6d249d81fb85b082273270ba710}{\index{delay\-\_\-rg.\-c@{delay\-\_\-rg.\-c}!delay\-\_\-ms@{delay\-\_\-ms}}
+\index{delay\-\_\-ms@{delay\-\_\-ms}!delay_rg.c@{delay\-\_\-rg.\-c}}
+\subsubsection[{delay\-\_\-ms}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf delay\-\_\-ms} (
+\begin{DoxyParamCaption}
+\item[{uint16\-\_\-t}]{ms}
+\end{DoxyParamCaption}
+)}}\label{delay__rg_8c_aa0dce6d249d81fb85b082273270ba710}
+
+
+Delays for {\ttfamily ms} milliseconds. 
+
+Allows for longer delays. The longest delay that \-\_\-delay\-\_\-ms() can provide is 262.\-14ms / F\-\_\-\-C\-P\-U(in M\-Hz).
+
+
+\begin{DoxyParams}{Parameters}
+{\em ms} & length of delay in miliseconds \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\hypertarget{delay__rg_8c_a58f9378c36dbb864c00f8c964c652173}{\index{delay\-\_\-rg.\-c@{delay\-\_\-rg.\-c}!delay\-\_\-us@{delay\-\_\-us}}
+\index{delay\-\_\-us@{delay\-\_\-us}!delay_rg.c@{delay\-\_\-rg.\-c}}
+\subsubsection[{delay\-\_\-us}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf delay\-\_\-us} (
+\begin{DoxyParamCaption}
+\item[{uint16\-\_\-t}]{us}
+\end{DoxyParamCaption}
+)}}\label{delay__rg_8c_a58f9378c36dbb864c00f8c964c652173}
+
+
+Delays for {\ttfamily us} microseconds. 
+
+Allows for longer delays. The longest delay that \-\_\-delay\-\_\-us() can provide is 768us / F\-\_\-\-C\-P\-U(in M\-Hz).
+
+
+\begin{DoxyParams}{Parameters}
+{\em us} & length of delay in microseconds \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}

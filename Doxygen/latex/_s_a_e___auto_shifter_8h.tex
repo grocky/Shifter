@@ -1,0 +1,210 @@
+\hypertarget{_s_a_e___auto_shifter_8h}{\section{S\-A\-E\-\_\-\-Auto\-Shifter.\-h File Reference}
+\label{_s_a_e___auto_shifter_8h}\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+}
+
+
+This header file contains constant definitions and function prototypes.  
+
+
+{\ttfamily \#include $<$stdint.\-h$>$}\\*
+{\ttfamily \#include $<$avr/interrupt.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}defines.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}delay\-\_\-rg.\-h\char`\"{}}\\*
+Include dependency graph for S\-A\-E\-\_\-\-Auto\-Shifter.\-h\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_s_a_e___auto_shifter_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{_s_a_e___auto_shifter_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_tach}{Tach}
+\item 
+struct \hyperlink{struct_usr___btns}{Usr\-\_\-\-Btns}
+\item 
+struct \hyperlink{struct_gear}{Gear}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_s_a_e___auto_shifter_8h_a46c8a310cf4c094f8c80e1cb8dc1f911}{Mode} \{ {\bfseries manual}, 
+{\bfseries semi\-\_\-man}, 
+{\bfseries automated}
+ \}
+\begin{DoxyCompactList}\small\item\em Mode of the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__tacho_ga8746e3cc762f3153c2889e07dbb6ece0}{update\-\_\-ave\-\_\-rpms} ()
+\item 
+uint16\-\_\-t \hyperlink{group__tacho_gaa71ed50a06812b35c553b2291460396e}{average\-\_\-rpms} ()
+\item 
+\hypertarget{group__tacho_ga962c04c1da2810dd1602a83f649a454e}{uint16\-\_\-t {\bfseries cur\-\_\-rpms} ()}\label{group__tacho_ga962c04c1da2810dd1602a83f649a454e}
+
+\item 
+uint8\-\_\-t \hyperlink{group__usr_btns_ga12edd371195cb085c440d64794fdf9ea}{btn\-\_\-state} (\hyperlink{struct_usr___btns}{Usr\-\_\-\-Btns} $\ast$u\-\_\-btn)
+\item 
+uint16\-\_\-t \hyperlink{group__usr_btns_ga10ac2ecdef1d96d9ef177f948817bbb3}{btn\-\_\-count} (\hyperlink{struct_usr___btns}{Usr\-\_\-\-Btns} $\ast$u\-\_\-btn)
+\item 
+\hypertarget{group__usr_btns_ga2f0699e265a6cc26a98e3470366b5cda}{uint8\-\_\-t {\bfseries on\-Release} (\hyperlink{struct_usr___btns}{Usr\-\_\-\-Btns} $\ast$btn)}\label{group__usr_btns_ga2f0699e265a6cc26a98e3470366b5cda}
+
+\item 
+\hyperlink{_s_a_e___auto_shifter_8h_aec43762dc86e029b395d4e5819192c2d}{I\-S\-R} (T\-I\-M\-E\-R0\-\_\-\-C\-O\-M\-P\-A\-\_\-vect)
+\begin{DoxyCompactList}\small\item\em Update the button states. \end{DoxyCompactList}\item 
+\hyperlink{_s_a_e___auto_shifter_8h_ad39420cdd896dd12c68e36313139d0a5}{I\-S\-R} (T\-I\-M\-E\-R1\-\_\-\-C\-O\-M\-P\-A\-\_\-vect)
+\begin{DoxyCompactList}\small\item\em Tachometer sample time. \end{DoxyCompactList}\item 
+\hyperlink{_s_a_e___auto_shifter_8h_afea150fcd685610cb9f7672fce361e53}{I\-S\-R} (I\-N\-T0\-\_\-vect)
+\begin{DoxyCompactList}\small\item\em Count pulses from the tachometer. Fires at the rising edge of signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{_s_a_e___auto_shifter_8h_ab50f3f7ed3b6b9ab1fa2605b587eece5}{uint16\-\_\-t \hyperlink{_s_a_e___auto_shifter_8h_ab50f3f7ed3b6b9ab1fa2605b587eece5}{isr\-Count}}\label{_s_a_e___auto_shifter_8h_ab50f3f7ed3b6b9ab1fa2605b587eece5}
+
+\begin{DoxyCompactList}\small\item\em I\-S\-R count. \end{DoxyCompactList}\item 
+\hypertarget{_s_a_e___auto_shifter_8h_a5b546e0fdb3a98f6a19d58c606431b88}{uint8\-\_\-t \hyperlink{_s_a_e___auto_shifter_8h_a5b546e0fdb3a98f6a19d58c606431b88}{tick}}\label{_s_a_e___auto_shifter_8h_a5b546e0fdb3a98f6a19d58c606431b88}
+
+\begin{DoxyCompactList}\small\item\em D\-E\-B\-U\-G variable -\/ system tick. \end{DoxyCompactList}\item 
+uint8\-\_\-t \hyperlink{_s_a_e___auto_shifter_8h_a1da220fbb1464acf8ebf211ba8f942be}{can\-Print}
+\item 
+\hypertarget{_s_a_e___auto_shifter_8h_a325783c7ea3d1eaaf66a1c7bae56167b}{enum \hyperlink{_s_a_e___auto_shifter_8h_a46c8a310cf4c094f8c80e1cb8dc1f911}{Mode} \hyperlink{_s_a_e___auto_shifter_8h_a325783c7ea3d1eaaf66a1c7bae56167b}{mode}}\label{_s_a_e___auto_shifter_8h_a325783c7ea3d1eaaf66a1c7bae56167b}
+
+\begin{DoxyCompactList}\small\item\em Mode switch. \end{DoxyCompactList}\item 
+\hypertarget{group__tacho_ga3920911d3598cb499db825e8cb9adcad}{\hyperlink{struct_tach}{Tach} \hyperlink{group__tacho_ga3920911d3598cb499db825e8cb9adcad}{tach}}\label{group__tacho_ga3920911d3598cb499db825e8cb9adcad}
+
+\begin{DoxyCompactList}\small\item\em Tachometer object. \end{DoxyCompactList}\item 
+\hypertarget{group__usr_btns_ga18ee634a9df9ed1ca0c7af2e021cec0f}{\hyperlink{struct_usr___btns}{Usr\-\_\-\-Btns} \hyperlink{group__usr_btns_ga18ee634a9df9ed1ca0c7af2e021cec0f}{up\-\_\-shift}}\label{group__usr_btns_ga18ee634a9df9ed1ca0c7af2e021cec0f}
+
+\begin{DoxyCompactList}\small\item\em Upshift button. \end{DoxyCompactList}\item 
+\hypertarget{group__usr_btns_gafd0b4b5ca080e04e71e4308414dc58ed}{\hyperlink{struct_usr___btns}{Usr\-\_\-\-Btns} \hyperlink{group__usr_btns_gafd0b4b5ca080e04e71e4308414dc58ed}{dn\-\_\-shift}}\label{group__usr_btns_gafd0b4b5ca080e04e71e4308414dc58ed}
+
+\begin{DoxyCompactList}\small\item\em Downshift button. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct_gear}{Gear} \hyperlink{_s_a_e___auto_shifter_8h_a847ee2f4a6c9a7af8ca2cab32b5917be}{Gear}
+\item 
+\hypertarget{_s_a_e___auto_shifter_8h_a26fea787ee1628dff57b862089c4523b}{\hyperlink{struct_gear}{Gear} $\ast$ \hyperlink{_s_a_e___auto_shifter_8h_a26fea787ee1628dff57b862089c4523b}{gear\-\_\-}}\label{_s_a_e___auto_shifter_8h_a26fea787ee1628dff57b862089c4523b}
+
+\begin{DoxyCompactList}\small\item\em Current gear. \end{DoxyCompactList}\item 
+\hypertarget{_s_a_e___auto_shifter_8h_abf8478276f1c8d0a00333ad9f061b2e7}{void {\bfseries Gear\-\_\-\-Construct} (\hyperlink{struct_gear}{Gear} $\ast$this, uint8\-\_\-t num, uint16\-\_\-t lower, uint16\-\_\-t upper, \hyperlink{struct_gear}{Gear} $\ast$p, \hyperlink{struct_gear}{Gear} $\ast$n)}\label{_s_a_e___auto_shifter_8h_abf8478276f1c8d0a00333ad9f061b2e7}
+
+\item 
+uint8\-\_\-t \hyperlink{_s_a_e___auto_shifter_8h_adde353caf7da095b13aeb74c2cc31277}{gear\-\_\-num} ()
+\item 
+uint16\-\_\-t \hyperlink{_s_a_e___auto_shifter_8h_a3a18aa2ddacbcd7f3c5f6c48f8c813b3}{gear\-\_\-upper} ()
+\item 
+uint16\-\_\-t \hyperlink{_s_a_e___auto_shifter_8h_a1805be701915c837c3a779f8679d1701}{gear\-\_\-lower} ()
+\item 
+\hypertarget{_s_a_e___auto_shifter_8h_ab255f19ddfec9d8967d83c340c29de9e}{void {\bfseries shift} (uint8\-\_\-t direction)}\label{_s_a_e___auto_shifter_8h_ab255f19ddfec9d8967d83c340c29de9e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This header file contains constant definitions and function prototypes. This project uses the Arduino Uno board. It uses the A\-T\-M\-E\-G\-A 328\-P microcontroller with a 16\-M\-Hz crystal oscillator. Pin mappings described below should only be used for this board or ones with the same pin mappings
+
+\begin{DoxyAuthor}{Author}
+Rocky Gray Jr.
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+3/7/2012 
+\end{DoxyDate}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{_s_a_e___auto_shifter_8h_a847ee2f4a6c9a7af8ca2cab32b5917be}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}!Gear@{Gear}}
+\index{Gear@{Gear}!SAE_AutoShifter.h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+\subsubsection[{Gear}]{\setlength{\rightskip}{0pt plus 5cm}n Next {\bf Gear}}}\label{_s_a_e___auto_shifter_8h_a847ee2f4a6c9a7af8ca2cab32b5917be}
+defgroup gears Gears Defines the gear structure and related functions. 
+
+\subsection{Function Documentation}
+\hypertarget{_s_a_e___auto_shifter_8h_a1805be701915c837c3a779f8679d1701}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}!gear\-\_\-lower@{gear\-\_\-lower}}
+\index{gear\-\_\-lower@{gear\-\_\-lower}!SAE_AutoShifter.h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+\subsubsection[{gear\-\_\-lower}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t {\bf gear\-\_\-lower} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{_s_a_e___auto_shifter_8h_a1805be701915c837c3a779f8679d1701}
+\hyperlink{_s_a_e___auto_shifter_8h_a1805be701915c837c3a779f8679d1701}{gear\-\_\-lower()}
+
+\begin{DoxyReturn}{Returns}
+The lower bound of the current gear 
+\end{DoxyReturn}
+\hypertarget{_s_a_e___auto_shifter_8h_adde353caf7da095b13aeb74c2cc31277}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}!gear\-\_\-num@{gear\-\_\-num}}
+\index{gear\-\_\-num@{gear\-\_\-num}!SAE_AutoShifter.h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+\subsubsection[{gear\-\_\-num}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf gear\-\_\-num} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{_s_a_e___auto_shifter_8h_adde353caf7da095b13aeb74c2cc31277}
+\hyperlink{_s_a_e___auto_shifter_8h_adde353caf7da095b13aeb74c2cc31277}{gear\-\_\-num()}
+
+\begin{DoxyReturn}{Returns}
+the number of the current gear 
+\end{DoxyReturn}
+\hypertarget{_s_a_e___auto_shifter_8h_a3a18aa2ddacbcd7f3c5f6c48f8c813b3}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}!gear\-\_\-upper@{gear\-\_\-upper}}
+\index{gear\-\_\-upper@{gear\-\_\-upper}!SAE_AutoShifter.h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+\subsubsection[{gear\-\_\-upper}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t {\bf gear\-\_\-upper} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{_s_a_e___auto_shifter_8h_a3a18aa2ddacbcd7f3c5f6c48f8c813b3}
+\hyperlink{_s_a_e___auto_shifter_8h_a3a18aa2ddacbcd7f3c5f6c48f8c813b3}{gear\-\_\-upper()}
+
+\begin{DoxyReturn}{Returns}
+The upper bound of the current gear 
+\end{DoxyReturn}
+\hypertarget{_s_a_e___auto_shifter_8h_aec43762dc86e029b395d4e5819192c2d}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}!I\-S\-R@{I\-S\-R}}
+\index{I\-S\-R@{I\-S\-R}!SAE_AutoShifter.h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+\subsubsection[{I\-S\-R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\-S\-R} (
+\begin{DoxyParamCaption}
+\item[{T\-I\-M\-E\-R0\-\_\-\-C\-O\-M\-P\-A\-\_\-vect}]{}
+\end{DoxyParamCaption}
+)}}\label{_s_a_e___auto_shifter_8h_aec43762dc86e029b395d4e5819192c2d}
+
+
+Update the button states. 
+
+Fires at \hyperlink{defines_8h_abbc7611d058a56c043591fab1ffede31}{T\-I\-M\-E\-R0\-\_\-\-F\-R\-E\-Q} Hz. \hypertarget{_s_a_e___auto_shifter_8h_ad39420cdd896dd12c68e36313139d0a5}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}!I\-S\-R@{I\-S\-R}}
+\index{I\-S\-R@{I\-S\-R}!SAE_AutoShifter.h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+\subsubsection[{I\-S\-R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\-S\-R} (
+\begin{DoxyParamCaption}
+\item[{T\-I\-M\-E\-R1\-\_\-\-C\-O\-M\-P\-A\-\_\-vect}]{}
+\end{DoxyParamCaption}
+)}}\label{_s_a_e___auto_shifter_8h_ad39420cdd896dd12c68e36313139d0a5}
+
+
+Tachometer sample time. 
+
+Fires at \hyperlink{defines_8h_a2f78c07e3b43ef498e926a39eff06b04}{T\-I\-M\-E\-R1\-\_\-\-F\-R\-E\-Q} Hz. (1ms) \begin{DoxyParagraph}{Converts the number of pulses counted}
+from the external interrupt into a value that represents the instantaneous rpms of the engine. It also places the current rpms into the history of rpms. 
+\end{DoxyParagraph}
+\hypertarget{_s_a_e___auto_shifter_8h_afea150fcd685610cb9f7672fce361e53}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}!I\-S\-R@{I\-S\-R}}
+\index{I\-S\-R@{I\-S\-R}!SAE_AutoShifter.h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+\subsubsection[{I\-S\-R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\-S\-R} (
+\begin{DoxyParamCaption}
+\item[{I\-N\-T0\-\_\-vect}]{}
+\end{DoxyParamCaption}
+)}}\label{_s_a_e___auto_shifter_8h_afea150fcd685610cb9f7672fce361e53}
+
+
+Count pulses from the tachometer. Fires at the rising edge of signal. 
+
+\begin{DoxyParagraph}{Counts the pulses from the tachometer until T\-I\-M\-E\-R1 fires.}
+
+\end{DoxyParagraph}
+
+
+\subsection{Variable Documentation}
+\hypertarget{_s_a_e___auto_shifter_8h_a1da220fbb1464acf8ebf211ba8f942be}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}!can\-Print@{can\-Print}}
+\index{can\-Print@{can\-Print}!SAE_AutoShifter.h@{S\-A\-E\-\_\-\-Auto\-Shifter.\-h}}
+\subsubsection[{can\-Print}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf can\-Print}}}\label{_s_a_e___auto_shifter_8h_a1da220fbb1464acf8ebf211ba8f942be}
+D\-E\-B\-U\-G variable -\/ print flag 

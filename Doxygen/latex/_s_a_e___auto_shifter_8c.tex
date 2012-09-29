@@ -1,0 +1,76 @@
+\hypertarget{_s_a_e___auto_shifter_8c}{\section{S\-A\-E\-\_\-\-Auto\-Shifter.\-c File Reference}
+\label{_s_a_e___auto_shifter_8c}\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-c@{S\-A\-E\-\_\-\-Auto\-Shifter.\-c}}
+}
+
+
+This file defines the main task and I\-S\-Rs.  
+
+
+{\ttfamily \#include \char`\"{}S\-A\-E\-\_\-\-Auto\-Shifter.\-h\char`\"{}}\\*
+Include dependency graph for S\-A\-E\-\_\-\-Auto\-Shifter.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_s_a_e___auto_shifter_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_a_e___auto_shifter_8c_aec43762dc86e029b395d4e5819192c2d}{I\-S\-R} (T\-I\-M\-E\-R0\-\_\-\-C\-O\-M\-P\-A\-\_\-vect)
+\begin{DoxyCompactList}\small\item\em Update the button states. \end{DoxyCompactList}\item 
+\hyperlink{_s_a_e___auto_shifter_8c_ad39420cdd896dd12c68e36313139d0a5}{I\-S\-R} (T\-I\-M\-E\-R1\-\_\-\-C\-O\-M\-P\-A\-\_\-vect)
+\begin{DoxyCompactList}\small\item\em Tachometer sample time. \end{DoxyCompactList}\item 
+\hyperlink{_s_a_e___auto_shifter_8c_afea150fcd685610cb9f7672fce361e53}{I\-S\-R} (I\-N\-T0\-\_\-vect)
+\begin{DoxyCompactList}\small\item\em Count pulses from the tachometer. Fires at the rising edge of signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file defines the main task and I\-S\-Rs. \begin{DoxyAuthor}{Author}
+Rocky Gray Jr.
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2/6/2012 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{_s_a_e___auto_shifter_8c_aec43762dc86e029b395d4e5819192c2d}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-c@{S\-A\-E\-\_\-\-Auto\-Shifter.\-c}!I\-S\-R@{I\-S\-R}}
+\index{I\-S\-R@{I\-S\-R}!SAE_AutoShifter.c@{S\-A\-E\-\_\-\-Auto\-Shifter.\-c}}
+\subsubsection[{I\-S\-R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\-S\-R} (
+\begin{DoxyParamCaption}
+\item[{T\-I\-M\-E\-R0\-\_\-\-C\-O\-M\-P\-A\-\_\-vect}]{}
+\end{DoxyParamCaption}
+)}}\label{_s_a_e___auto_shifter_8c_aec43762dc86e029b395d4e5819192c2d}
+
+
+Update the button states. 
+
+Fires at \hyperlink{defines_8h_abbc7611d058a56c043591fab1ffede31}{T\-I\-M\-E\-R0\-\_\-\-F\-R\-E\-Q} Hz. \hypertarget{_s_a_e___auto_shifter_8c_ad39420cdd896dd12c68e36313139d0a5}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-c@{S\-A\-E\-\_\-\-Auto\-Shifter.\-c}!I\-S\-R@{I\-S\-R}}
+\index{I\-S\-R@{I\-S\-R}!SAE_AutoShifter.c@{S\-A\-E\-\_\-\-Auto\-Shifter.\-c}}
+\subsubsection[{I\-S\-R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\-S\-R} (
+\begin{DoxyParamCaption}
+\item[{T\-I\-M\-E\-R1\-\_\-\-C\-O\-M\-P\-A\-\_\-vect}]{}
+\end{DoxyParamCaption}
+)}}\label{_s_a_e___auto_shifter_8c_ad39420cdd896dd12c68e36313139d0a5}
+
+
+Tachometer sample time. 
+
+Fires at \hyperlink{defines_8h_a2f78c07e3b43ef498e926a39eff06b04}{T\-I\-M\-E\-R1\-\_\-\-F\-R\-E\-Q} Hz. (1ms) \begin{DoxyParagraph}{Converts the number of pulses counted}
+from the external interrupt into a value that represents the instantaneous rpms of the engine. It also places the current rpms into the history of rpms. 
+\end{DoxyParagraph}
+\hypertarget{_s_a_e___auto_shifter_8c_afea150fcd685610cb9f7672fce361e53}{\index{S\-A\-E\-\_\-\-Auto\-Shifter.\-c@{S\-A\-E\-\_\-\-Auto\-Shifter.\-c}!I\-S\-R@{I\-S\-R}}
+\index{I\-S\-R@{I\-S\-R}!SAE_AutoShifter.c@{S\-A\-E\-\_\-\-Auto\-Shifter.\-c}}
+\subsubsection[{I\-S\-R}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\-S\-R} (
+\begin{DoxyParamCaption}
+\item[{I\-N\-T0\-\_\-vect}]{}
+\end{DoxyParamCaption}
+)}}\label{_s_a_e___auto_shifter_8c_afea150fcd685610cb9f7672fce361e53}
+
+
+Count pulses from the tachometer. Fires at the rising edge of signal. 
+
+\begin{DoxyParagraph}{Counts the pulses from the tachometer until T\-I\-M\-E\-R1 fires.}
+
+\end{DoxyParagraph}

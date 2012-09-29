@@ -1,0 +1,45 @@
+\hypertarget{group__tacho}{\section{Tachometer}
+\label{group__tacho}\index{Tachometer@{Tachometer}}
+}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_tach}{Tach}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__tacho_ga8746e3cc762f3153c2889e07dbb6ece0}{update\-\_\-ave\-\_\-rpms} ()
+\item 
+uint16\-\_\-t \hyperlink{group__tacho_gaa71ed50a06812b35c553b2291460396e}{average\-\_\-rpms} ()
+\item 
+\hypertarget{group__tacho_ga962c04c1da2810dd1602a83f649a454e}{uint16\-\_\-t {\bfseries cur\-\_\-rpms} ()}\label{group__tacho_ga962c04c1da2810dd1602a83f649a454e}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__tacho_ga3920911d3598cb499db825e8cb9adcad}{\hyperlink{struct_tach}{Tach} \hyperlink{group__tacho_ga3920911d3598cb499db825e8cb9adcad}{tach}}\label{group__tacho_ga3920911d3598cb499db825e8cb9adcad}
+
+\begin{DoxyCompactList}\small\item\em Tachometer object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Holds the tach pulses and rpm conversion. {\ttfamily rpms} update at \hyperlink{defines_8h_a2f78c07e3b43ef498e926a39eff06b04}{T\-I\-M\-E\-R1\-\_\-\-F\-R\-E\-Q} 
+
+\subsection{Function Documentation}
+\hypertarget{group__tacho_gaa71ed50a06812b35c553b2291460396e}{\index{Tachometer@{Tachometer}!average\-\_\-rpms@{average\-\_\-rpms}}
+\index{average\-\_\-rpms@{average\-\_\-rpms}!Tachometer@{Tachometer}}
+\subsubsection[{average\-\_\-rpms}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t {\bf average\-\_\-rpms} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{group__tacho_gaa71ed50a06812b35c553b2291460396e}
+\hyperlink{group__tacho_gaa71ed50a06812b35c553b2291460396e}{average\-\_\-rpms()} Returns the \hyperlink{struct_tach}{Tach}'s average rpm variable \hypertarget{group__tacho_ga8746e3cc762f3153c2889e07dbb6ece0}{\index{Tachometer@{Tachometer}!update\-\_\-ave\-\_\-rpms@{update\-\_\-ave\-\_\-rpms}}
+\index{update\-\_\-ave\-\_\-rpms@{update\-\_\-ave\-\_\-rpms}!Tachometer@{Tachometer}}
+\subsubsection[{update\-\_\-ave\-\_\-rpms}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf update\-\_\-ave\-\_\-rpms} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{group__tacho_ga8746e3cc762f3153c2889e07dbb6ece0}
+\hyperlink{group__tacho_ga8746e3cc762f3153c2889e07dbb6ece0}{update\-\_\-ave\-\_\-rpms()} Updates the \hyperlink{struct_tach}{Tach} rpm variable 

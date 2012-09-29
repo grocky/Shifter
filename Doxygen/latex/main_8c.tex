@@ -1,0 +1,152 @@
+\hypertarget{main_8c}{\section{main.\-c File Reference}
+\label{main_8c}\index{main.\-c@{main.\-c}}
+}
+
+
+This file contains device specific initialization tasks and the main function.  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}S\-A\-E\-\_\-\-Auto\-Shifter.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}serial.\-h\char`\"{}}\\*
+Include dependency graph for main.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{main_8c_a43bafb28b29491ec7f871319b5a3b2f8}{\#define {\bfseries F\-\_\-\-C\-P\-U}~16000000\-L}\label{main_8c_a43bafb28b29491ec7f871319b5a3b2f8}
+
+\item 
+\hypertarget{main_8c_ad72dbcf6d0153db1b8d8a58001feed83}{\#define \hyperlink{main_8c_ad72dbcf6d0153db1b8d8a58001feed83}{D\-E\-B\-U\-G}}\label{main_8c_ad72dbcf6d0153db1b8d8a58001feed83}
+
+\begin{DoxyCompactList}\small\item\em Uncomment \hyperlink{main_8c_ad72dbcf6d0153db1b8d8a58001feed83}{D\-E\-B\-U\-G} to print out system information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8c_a43bba613ce0efd6af387cd04458ede8d}{io\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em Initialize i/o ports and timer. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a99ccbea44caa7d91c17782c602f956ef}{timer0\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em Initialize Timer 0. \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_a968c314be24f7043eeff034ebf7c4a03}{timer1\-\_\-init} (void)
+\begin{DoxyCompactList}\small\item\em Initialize Timer 1. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{int \hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}
+
+\begin{DoxyCompactList}\small\item\em The main task for the autoshifter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+uint8\-\_\-t \hyperlink{main_8c_a5b546e0fdb3a98f6a19d58c606431b88}{tick}
+\begin{DoxyCompactList}\small\item\em Uncomment \#\-S\-I\-M\-U\-L\-A\-T\-E in order to use the rpm regulator simulation. \end{DoxyCompactList}\item 
+\hypertarget{main_8c_a1da220fbb1464acf8ebf211ba8f942be}{uint8\-\_\-t \hyperlink{main_8c_a1da220fbb1464acf8ebf211ba8f942be}{can\-Print}}\label{main_8c_a1da220fbb1464acf8ebf211ba8f942be}
+
+\begin{DoxyCompactList}\small\item\em D\-E\-B\-U\-G variable -\/ print flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains device specific initialization tasks and the main function. \begin{DoxySeeAlso}{See also}
+\hyperlink{defines_8h}{defines.\-h} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Rocky Gray Jr.
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+3/11/2012 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{main_8c_a43bba613ce0efd6af387cd04458ede8d}{\index{main.\-c@{main.\-c}!io\-\_\-init@{io\-\_\-init}}
+\index{io\-\_\-init@{io\-\_\-init}!main.c@{main.\-c}}
+\subsubsection[{io\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf io\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{main_8c_a43bba613ce0efd6af387cd04458ede8d}
+
+
+Initialize i/o ports and timer. 
+
+\hypertarget{main_8c_init2}{}\subsection{Outputs\-:}\label{main_8c_init2}
+
+\begin{DoxyItemize}
+\item Solenoid Output
+\begin{DoxyItemize}
+\item \hyperlink{defines_8h_a3ca3b069d7464c17c03b5b1e7da788fd}{S\-O\-L\-E\-N\-\_\-\-O\-P\-\_\-\-D\-D\-R} =$>$ set \hyperlink{defines_8h_ae38dab54770629f5f2b7975164123353}{S\-O\-L\-E\-N\-\_\-\-D\-N} and \hyperlink{defines_8h_aeacdff688cfbf944da03e3c972f878f0}{S\-O\-L\-E\-N\-\_\-\-U\-P} as output
+\item \hyperlink{defines_8h_a4ad600582a951bdd4b75311388dc6ae7}{S\-O\-L\-E\-N\-\_\-\-O\-P\-\_\-\-P\-O\-R\-T} =$>$ initialize \hyperlink{defines_8h_ae38dab54770629f5f2b7975164123353}{S\-O\-L\-E\-N\-\_\-\-D\-N} and \hyperlink{defines_8h_aeacdff688cfbf944da03e3c972f878f0}{S\-O\-L\-E\-N\-\_\-\-U\-P} to 0
+\end{DoxyItemize}
+\item Board Light Output
+\begin{DoxyItemize}
+\item \hyperlink{defines_8h_ae5ba1fb0b349f2a7f2fb82cb2cf39cbb}{B\-O\-A\-R\-D\-\_\-\-D\-D\-R} =$>$ set \hyperlink{defines_8h_a9ac61ad7c19d5a7d1f4cb1b45f41c7b1}{B\-O\-A\-R\-D\-\_\-\-L\-I\-G\-H\-T} as output
+\item \hyperlink{defines_8h_a538e637dc4c2e333b294814e381d9a75}{B\-O\-A\-R\-D\-\_\-\-P\-O\-R\-T} =$>$ initialize B\-O\-A\-R\-D\-\_\-\-L\-I\-G\-H\-T to 0 
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{main_8c_init1}{}\subsection{Inputs\-:}\label{main_8c_init1}
+
+\begin{DoxyItemize}
+\item User Buttons
+\begin{DoxyItemize}
+\item \hyperlink{defines_8h_a0f1aed08f5269f1bddc80c20ecaec0be}{B\-T\-N\-\_\-\-I\-P\-\_\-\-D\-D\-R} =$>$ set \hyperlink{defines_8h_ac4a361c6ecdb8ef9a4c7a7253fa0feb8}{U\-S\-H\-I\-F\-T\-\_\-\-P\-I\-N} and \hyperlink{defines_8h_a7f2aeb6091a43ad2b243e35a521ec5b0}{D\-S\-H\-I\-F\-T\-\_\-\-P\-I\-N} as input
+\item \hyperlink{defines_8h_a6ac943017d31877e3b86387e14c9b006}{B\-T\-N\-\_\-\-I\-P\-\_\-\-P\-O\-R\-T} =$>$ set pullups for \hyperlink{defines_8h_ac4a361c6ecdb8ef9a4c7a7253fa0feb8}{U\-S\-H\-I\-F\-T\-\_\-\-P\-I\-N} and \hyperlink{defines_8h_a7f2aeb6091a43ad2b243e35a521ec5b0}{D\-S\-H\-I\-F\-T\-\_\-\-P\-I\-N}
+\end{DoxyItemize}
+\item Tachometer Input
+\begin{DoxyItemize}
+\item \#\-T\-A\-C\-H\-\_\-\-I\-P\-\_\-\-D\-D\-R =$>$ set \hyperlink{defines_8h_af84d0d7a25d38271813b650eeb6a4228}{T\-A\-C\-H\-\_\-\-P\-I\-N} as input
+\item Enable external Interrupt
+\end{DoxyItemize}
+\item Gas Pedal Input
+\begin{DoxyItemize}
+\item Enable A\-D\-C
+\begin{DoxyItemize}
+\item 128 Prescaler
+\item A\-R\-E\-F = A\-V\-C\-C
+\item Left align result
+\item Free Running mode 
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{main_8c_a99ccbea44caa7d91c17782c602f956ef}{\index{main.\-c@{main.\-c}!timer0\-\_\-init@{timer0\-\_\-init}}
+\index{timer0\-\_\-init@{timer0\-\_\-init}!main.c@{main.\-c}}
+\subsubsection[{timer0\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf timer0\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{main_8c_a99ccbea44caa7d91c17782c602f956ef}
+
+
+Initialize Timer 0. 
+
+Timer 0\-:
+\begin{DoxyItemize}
+\item Configure Timer 0 for C\-T\-C (Clear Timer on Compare)
+\item Prescaler set to \hyperlink{defines_8h_a42b5bcd9eeb1d25e27f7dffba04a1507}{P\-R\-E\-S\-C\-A\-L\-E\-R0} (16\-M\-Hz/\hyperlink{defines_8h_a42b5bcd9eeb1d25e27f7dffba04a1507}{P\-R\-E\-S\-C\-A\-L\-E\-R0})
+\item Fires every \hyperlink{defines_8h_abbc7611d058a56c043591fab1ffede31}{T\-I\-M\-E\-R0\-\_\-\-F\-R\-E\-Q} Hz 
+\end{DoxyItemize}\hypertarget{main_8c_a968c314be24f7043eeff034ebf7c4a03}{\index{main.\-c@{main.\-c}!timer1\-\_\-init@{timer1\-\_\-init}}
+\index{timer1\-\_\-init@{timer1\-\_\-init}!main.c@{main.\-c}}
+\subsubsection[{timer1\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf timer1\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}\label{main_8c_a968c314be24f7043eeff034ebf7c4a03}
+
+
+Initialize Timer 1. 
+
+Timer 1\-:
+\begin{DoxyItemize}
+\item Configure Timer 1 for...
+\item Prescaler set to \hyperlink{defines_8h_a8e5346fd5983419a0dbcbbc4995c7ea7}{P\-R\-E\-S\-C\-A\-L\-E\-R1} (16\-M\-Hz/\hyperlink{defines_8h_a8e5346fd5983419a0dbcbbc4995c7ea7}{P\-R\-E\-S\-C\-A\-L\-E\-R1})
+\item Fires every \hyperlink{defines_8h_a2f78c07e3b43ef498e926a39eff06b04}{T\-I\-M\-E\-R1\-\_\-\-F\-R\-E\-Q} Hz 
+\end{DoxyItemize}
+
+\subsection{Variable Documentation}
+\hypertarget{main_8c_a5b546e0fdb3a98f6a19d58c606431b88}{\index{main.\-c@{main.\-c}!tick@{tick}}
+\index{tick@{tick}!main.c@{main.\-c}}
+\subsubsection[{tick}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf tick}}}\label{main_8c_a5b546e0fdb3a98f6a19d58c606431b88}
+
+
+Uncomment \#\-S\-I\-M\-U\-L\-A\-T\-E in order to use the rpm regulator simulation. 
+
+D\-E\-B\-U\-G variable -\/ system tick 
